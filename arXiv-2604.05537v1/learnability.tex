@@ -1,0 +1,94 @@
+% !TEX root = ./main.tex
+
+\nocite{bojanczyk} % there is a bug for references appearing only in `toappendix` env. Adding this here to force bibtex to process the reference cited in the proof.
+
+{\bf Learnability. } An interesting application of canonicity is that  it allows us to design efficient $L^*$-style learning for TDD, as for finite automata and OBDD~\cite{angluin1987learning}. This result is framed in the {\em Minimally Adequate Teacher} model: there is a hidden Boolean function $f:2^X\to\{0,1\}$ which the learning agent can only access via two types of queries: {\em membership queries}, in which it tests some assignment on $X$, and an oracle answers whether it is a model or not; and {\em equivalence queries}, in which the agent tests a TDD, and an oracle answers whether it represents $f$, and in the negative case provides a counterexample. The goal of the process is to construct a minimal size TDD for $f$ with a low number of queries.
+% \guy{we haven't talked about minimality at this point} 
+
+\begin{proposition}[$\star$]  \label{prop:learn}
+Fix a vtree $T$ on $X$.
+	There is an algorithm that learns the canonical TDD $C$ respecting $T$ in polynomial time in $|C|$ and with a polynomial number of oracle calls to membership and equivalence queries.
+\end{proposition}
+\begin{toappendix}
+\begin{proof}[Proof of Proposition~\ref{prop:learn}]
+We describe our algorithm as an adaptation of Angluin's $L^*$ original algorithm~\cite{angluin1987learning}.
+We also borrow some notation and insights on Bojanczyk's version of it~\cite{bojanczyk}.
+
+To simplify the algorithm, we will state the result for an algorithm that learns a minimal {\em full} TDD, as defined in the appendix of Section~\ref{sec:transformations}. We state without proof that a slight rewriting of Theorem~\ref{thm:prop:tdd-min}, by allowing trivial subfunctions, holds for full TDD.
+For the final algorithm that learns a minimal TDD, we keep the algorithm as is, except for an extra step which trims the TDD.
+
+The setting of the algorithm is this:
+for every $t\in T$, we keep a set ${\sf Nodes}_t$ of partial assignments on $X_t$; and for every non-leaf $t\in T$ we keep a set ${\sf Tests}_t$ of partial assignments on $X\setminus X_t$. 
+For a step of the algorithm, we call the current sets ${\sf Nodes}_t$ and ${\sf Tests}_t$ its {\em state}.
+
+Given a non-leaf $t\in T$, and a given ${\sf Tests}_t$,  we say that partial assignments $\tau_1$ and $\tau_2$ on $X_t$ are {\em equivalent at $t$} if for every $\kappa\in {\sf Tests}_t$ it holds that $f(\tau_1 \times \kappa) = f(\tau_2 \times \kappa)$.
+%As an invariant, for every $t$, every partial assignment $\tau\in {\sf Nodes}_t$ is unique up to ${\sf Tests}_t$-equivalence. 
+We note that two partial assignments $\tau_1$ and $\tau_2$ on $X_t$ can be tested for at-$t$-equivalence with $|{\sf Tests}_t|$ membership queries.
+
+We say that the state of the algorithm is {\em closed} if, for every non-leaf node $t$, for any choice of $\tau_{\ell} \in {\sf Nodes}_{\ell(t)}$ and $\tau_r \in {\sf Nodes}_{r(t)}$, the partial assignment $\tau_\ell \times \tau_r$ is equivalent at $t$ to some $\tau \in {\sf Nodes}_t$. 
+%We note that this can be tested with a number of membership queries that is polynomial in the size of the stored information.
+
+We say that the state of the algorithm is {\em left-consistent} if, for every non-leaf node $t$, for any $\tau_{1}, \tau_{2}  \in {\sf Nodes}_{\ell(t)}$ that are equivalent at $\ell(t)$ it holds that for every $\tau_r\in {\sf Nodes}_{r(t)}$ the partial assignments $\tau_{1} \times \tau_r$ and $\tau_{2} \times \tau_r$  are equivalent at $t$. 
+We say the sets are {\em right-consistent} with an analogous definition, and we say the state is {\em consistent} if it is both left- and right-consistent.
+% Like for closure, we can test for consistency with a polynomial number of membership queries.
+
+Fix a non-leaf $t\in T$. We denote the class of partial assignments that are equivalent at $t$ to a $\tau\in{\sf Nodes}_t$ by $[\tau]$.
+
+\begin{remark}\label{rem:learn:build}
+If the state of the algorithm is closed and consistent, we can build a full TDD $C = (N, E)$ as follows: for each $t\in T$ define $N_t = \{[\tau]\mid \tau\in {\sf Nodes}_t\}$, and its root is $[\tau]$ for any $\tau\in{\sf Nodes}_{{\sf root}(T)}$ that evaluates to 1; and the upwards function $E$ is defined by $E([\tau_\ell], [\tau_r]) = [\tau_\ell \times \tau_r]$ for every $\tau_\ell\in{\sf Nodes}_{\ell(t)}$ and $\tau_r\in{\sf Nodes}_{r(t)}$. 
+We prove that the construction of $E$ is correct: if the state of the algorithm is closed, then the latter $[\tau_\ell \times \tau_r]$ exists; and if it is consistent, then for every $\tau_\ell'\in [\tau_\ell]$ and $\tau_r'\in[\tau_r]$ it holds that $[\tau_\ell' \times \tau_r'] = [\tau_\ell \times \tau_r]$.
+\end{remark}
+
+{\bf The algorithm. } We begin by setting ${\sf Nodes}_t$ to $\emptyset$ for every non-leaf $t\in T$, except for $t = {\sf root}(T)$ where ${\sf Nodes}_t$ is set as a singleton of the empty assignment from $\emptyset$ to $\{0,1\}$.
+Then:
+\begin{enumerate}
+\item Check for closure; if the current state is not closed, then, for the $t\in T$ in which the test failed, add the witnessing partial assignment to ${\sf Nodes}_t$. Repeat this until the state is closed.
+\item Check for consistency; w.l.o.g. if the current state is not left-consistent, then, for the $t\in T$ in which the test failed, add the $\tau_r\in {\sf Nodes}_{r(t)}$ that witnesses failure to ${\sf Tests}_{\ell(t)}$, and go back to step 1.
+\item The state of the algorithm is now closed and consistent, so we build the TDD from Remark~\ref{rem:learn:build} and run an equivalence query. If the query answers {\em true}, the algorithm ends and we return the TDD; otherwise, we receive a counterexample assignment $\tau_c$, and then for each non-leaf node $t\in T$ we add $\tau_c\vert_{X_t}$ to ${\sf Nodes}_t$, and then go back to step 1.
+\end{enumerate} 
+This ends the description of the algorithm.
+
+Clearly, if the algorithm ends, then the TDD given as output is equivalent to the hidden function $f$. We argue that it is also minimal.
+\begin{claim}\label{claim:learn:min}
+The TDD produced by the algorithm is minimal for full TDD.
+\end{claim}
+\begin{proof}
+For a non-leaf $t\in T$, if two $\tau_1,\tau_2\in{\sf Nodes}_t$ are not equivalent at $t$, then there is a partial assignment $\kappa\in{\sf Tests}_t$ that witnesses that $f[\tau_1]$ and $f[\tau_2]$ define different $X_t$-subfunctions. Since we have at most one node per $X_t$-subfunction of $f$, the TDD is minimal for full TDD by virtue of the stated rewriting of Theorem~\ref{thm:prop:tdd-min}.
+\end{proof}
+
+Yet we still need to prove that the algorithm actually ends. We use the following.
+\begin{remark}\label{rem:learn:equivs}
+The only way that equivalence classes inside each ${\sf Nodes}_t$ can change are (1) by adding more elements to ${\sf Tests}_t$, and this may separate a class into more than one class, and (2) by adding an element to ${\sf Nodes}_t$ that does not belong to any other existing class. In particular, the number of equivalence classes never decreases; and if their number stays the same, the equivalence classes do not change either.
+\end{remark}
+
+The fact that the algorithm ends follows straightforwardly by these two claims:
+
+\begin{claim}\label{claim:learn:corr1}
+If the equivalence query in step 3 answers {\em false}, then after adding the counterexample $\tau_c$ and its partial assignments to the ${\sf Nodes}_t$ sets, the next iteration of steps 1 and 2 strictly increases the number of equivalence classes under at-$t$-equivalence for at least one $t\in T$. 
+\end{claim}
+\begin{proof}
+Let us suppose that after adding the partial assignments and going through steps 1 and 2, the equivalence classes at each $t\in T$ do not increase in number; and given Remark~\ref{rem:learn:equivs}, this is the same as them staying unchanged. Consider the following two TDDs that can be built by the current state, (1) by using the same partial assignments as the one we tested in the previous iteration of step 3, and (2) by using the partial assignments derived from $\tau_c$. By Remark~\ref{rem:learn:build}, these TDDs are isomorphic. We note that in this TDD, evaluating the assignment $\tau_c$ satisfies node $[\tau_c\vert_{X_t}]$ for every $t\in T$, and in particular $[\tau_c]$, which contradicts the fact that $\tau_c$ was a counterexample.
+\end{proof}
+Since equivalence queries are bounded by Claim~\ref{claim:learn:corr1}, the proof concludes with the following statement.
+\begin{claim}\label{claim:learn:corr2}
+The total number of membership queries is polynomial in the size of the target TDD $C^*$.
+\end{claim}
+\begin{proof}
+Note that the only moment at which we add some element to any ${\sf Nodes}_t$ are steps 1 and 3. In the former, adding an element creates a new equivalence class, and the latter is done a total number of times that is bounded by $|C^*|$ by Claim~\ref{claim:learn:corr1}. We obtain that the size of ${\sf Nodes}_t$ for any $t\in T$ is at most $2\cdot|C^*|$.  
+
+Similarly, the only moment in which we add some element to any ${\sf Tests}_t$ is step 2.
+For a given $t$, we will only add elements from ${\sf Nodes}_{\ell(t)}$ to ${\sf Tests}_{r(t)}$, and only elements from ${\sf Nodes}_{r(t)}$ to ${\sf Tests}_{\ell(t)}$, so the size of any ${\sf Tests}_t$ is also bounded by $2\cdot|C^*|$.
+
+From the arguments above, it follows that any closure check and any consistency check takes a number of membership queries that is polynomial in $|C^*|$.
+
+Now, let us reason how many times step 1 and step 2 can occur. We note that every time both the closure check and the consistency check succeed, then step 3 is reached, and by Claim~\ref{claim:learn:corr1}, the number of times this occurs is bounded by $|C^*|$. Now, let us count the number of times there can be an iteration in which any of them fails. We note that every time the closure check fails, a new equivalence class is added, and every time the consistency check fails, an element is added to some ${\sf Tests}_t$. Therefore, the number of iterations with any of the failures is at most $|C^*| + \sum_{t\in T}|{\sf Tests}_t|$. In total, this proves that the number of total closure and consistency checks is also polynomial in $|C^*|$.
+\end{proof}
+
+It can easily be checked that every other step performed by the algorithm can be done in polynomial time.
+\end{proof}
+\end{toappendix}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

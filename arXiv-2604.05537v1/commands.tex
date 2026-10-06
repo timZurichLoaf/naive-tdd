@@ -1,0 +1,253 @@
+\setcounter{secnumdepth}{3}
+
+% Operators
+
+\let\polylog\relax
+\DeclareMathOperator{\polylog}{polylog}
+\let\poly\relax
+\DeclareMathOperator{\poly}{poly}
+\DeclareMathOperator{\lit}{lit}
+\DeclareMathOperator{\argmax}{argmax}
+
+% Th Env
+
+\newtheorem{openq}{Open question}
+
+% Grammar
+\NewDocumentCommand{\wrt}{}{with respect to}
+
+
+% General math
+\NewDocumentCommand{\R}{}{\ensuremath{\mathbb{R}}}
+\NewDocumentCommand{\N}{}{\ensuremath{\mathbb{N}}}
+
+\NewDocumentCommand{\ua}{O{x} O{d}}{\ensuremath{\langle #1/#2 \rangle}}
+\NewDocumentCommand{\restr}{m m}{\ensuremath{#1|_{#2}}}
+\NewDocumentCommand{\tower}{}{\ensuremath{\mathsf{tower}}}
+\RenewDocumentCommand{\th}{}{\ensuremath{\mathsf{th}}}
+
+\NewDocumentCommand{\calT}{}{\ensuremath{\mathcal{T}}}
+\NewDocumentCommand{\calC}{}{\ensuremath{\mathcal{C}}}
+\NewDocumentCommand{\calP}{}{\ensuremath{\mathcal{P}}}
+
+\NewDocumentCommand{\sub}{}{\ensuremath{\mathsf{sub}}}
+
+% Algorithm
+
+\NewDocumentCommand{\eIf}{m m}{\State {\bf if} #1 {\bf then} #2}
+\NewDocumentCommand{\eFor}{m m}{\State {\bf for} #1 {\bf do} #2}
+
+
+% General KC
+\NewDocumentCommand{\out}{O{C}}{\ensuremath{\mathsf{out}(#1)}}
+\NewDocumentCommand{\sib}{O{g} O{g_1}}{\ensuremath{\mathsf{sib}(#2,#1)}}
+\NewDocumentCommand{\HWB}{}{\ensuremath{\mathsf{HWB}}}
+\NewDocumentCommand{\MUX}{}{\ensuremath{\mathsf{MUX}}}
+\NewDocumentCommand{\Hamm}{}{\ensuremath{\mathsf{HAM}}}
+
+
+% Graphs
+
+%% Graph width
+
+\NewDocumentCommand{\hwidth}{m m m}{%
+  \ifthenelse{\isempty{#2}}%
+  {\ensuremath{\mathsf{#3}(#1)}}%
+  {\ensuremath{\mathsf{#3}(#1, #2)}}%
+}
+\NewDocumentCommand{\how}{m O{}}{\hwidth{#1}{#2}{how}}
+\NewDocumentCommand{\fhow}{m O{}}{\hwidth{#1}{#2}{fhow}}
+\NewDocumentCommand{\bhow}{m O{}}{\beta\text{-}\hwidth{#1}{#2}{how}}
+\NewDocumentCommand{\bfhow}{m O{}}{\beta\text{-}\hwidth{#1}{#2}{fhow}}
+\NewDocumentCommand{\sfhow}{m O{}}{\hwidth{#1}{#2}{sfhow}}
+\RenewDocumentCommand{\show}{m O{}}{\hwidth{#1}{#2}{show}}
+\NewDocumentCommand{\htw}{m O{}}{\hwidth{#1}{#2}{htw}}
+\NewDocumentCommand{\fhtw}{m O{}}{\hwidth{#1}{#2}{fhtw}}
+\NewDocumentCommand{\bfhtw}{m O{}}{\beta\text{-}\hwidth{#1}{#2}{fhtw}}
+\NewDocumentCommand{\bhtw}{m O{}}{\beta\text{-}\hwidth{#1}{#2}{htw}}
+\NewDocumentCommand{\bpfhtw}{m O{}}{\beta\text{-}\hwidth{#1}{#2}{fhtw'}}
+\NewDocumentCommand{\bphtw}{m O{}}{\beta\text{-}\hwidth{#1}{#2}{htw'}}
+\NewDocumentCommand{\nsw}{m O{}}{\hwidth{#1}{#2}{nsw}}
+\NewDocumentCommand{\tw}{m O{}}{\hwidth{#1}{#2}{tw}}
+\NewDocumentCommand{\ptw}{m O{}}{\hwidth{#1}{#2}{ptw}}
+\NewDocumentCommand{\itw}{m O{}}{\hwidth{#1}{#2}{itw}}
+\NewDocumentCommand{\fw}{m O{}}{\hwidth{#1}{#2}{fw}}
+
+\NewDocumentCommand{\ccw}{m O{}}{\hwidth{#1}{#2}{ccw}}
+
+
+
+
+
+
+% CNF
+
+\NewDocumentCommand{\gprim}{O{F}}{\ensuremath{{\mathsf{Prim}(#1)}}}
+\NewDocumentCommand{\ginc}{O{F}}{\ensuremath{{\mathsf{Inc}(#1)}}}
+
+% General
+
+
+\NewDocumentCommand{\from}{}{\ensuremath{\colon}}
+\NewDocumentCommand{\cd}{m}{\textsc{cd#1}}
+\RenewDocumentCommand{\d}{m}{\textsc{d#1}}
+
+\NewDocumentCommand{\syncdecdnnf}{O{\calP}}{\ensuremath{\mathsf{sync\text{-}decDNNF(#1)}}}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "hdr"
+%%% End:
+
+
+
+\newcommand{\BPOL}{BPO$_{\text{L}}$}
+
+\newcommand{\pare}[1]{\left(#1\right)}
+\newcommand{\bra}[1]{\left\{#1\right\}}
+
+% Notes:
+\usepackage{color}
+\newcommand{\adp}[1]{\color{magenta} Alberto: #1 \color{black}}
+\newcommand{\sil}[1]{\color{cyan} Silvia: #1 \color{black}}
+\newcommand{\siled}[1]{\color{cyan}#1\color{black}}
+\newcommand{\flo}[1]{\color{orange} Florent: #1 \color{black}}
+
+\newcommand{\newcontent}[1]{{\color{blue} #1}}
+
+%% Used for displaying a sample figure. If possible, figure files should
+%% be included in EPS format.
+%%
+%% If you use the hyperref package, please uncomment the following two lines
+%% to display URLs in blue roman font according to Springer's eBook style:
+
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+%%
+%
+%%\input{commands}
+%
+%
+
+% Maths
+
+\RenewDocumentCommand{\to}{}{\ensuremath{\rightarrow}}
+\NewDocumentCommand{\var}{m}{\ensuremath{\mathsf{var}(#1)}}
+
+\RenewDocumentCommand{\P}{}{\ensuremath{\mathsf{P}}}
+\DeclareMathOperator{\cert}{cert}
+
+\NewDocumentCommand{\ecup}{}{\ensuremath{\mathbin{\bar{\cup}}}}
+\NewDocumentCommand{\euplus}{}{\ensuremath{\mathbin{\bar{\uplus}}}}
+
+\NewDocumentCommand{\y}{}{\ensuremath{\mathbf{y}}}
+\NewDocumentCommand{\x}{}{\ensuremath{\mathbf{x}}}
+
+% Semi rings
+
+\NewDocumentCommand{\Z}{}{\ensuremath{\mathbb{Z}}}
+\NewDocumentCommand{\Q}{}{\ensuremath{\mathbb{Q}}}
+
+\NewDocumentCommand{\K}{}{\ensuremath{\mathbb{K}}}
+\NewDocumentCommand{\Zmp}{}{\ensuremath{\mathbb{Z}_{(\max,+)}}}
+\NewDocumentCommand{\Qmp}{}{\ensuremath{\mathbb{Q}_{(\max,+)}}}
+
+% BPO
+
+\NewDocumentCommand{\BPO}{O{H} O{p}}{\ensuremath{\mathsf{BPO}(#1,#2)}}
+
+\NewDocumentCommand{\BOP}{}{Boolean Maximization Problem}
+
+\NewDocumentCommand{\topk}{}{\ensuremath{\mathsf{top}^k}}
+
+% Graphs
+
+\NewDocumentCommand{\prim}{O{F}}{\ensuremath{\mathsf{G_{prim}}(#1)}}
+\NewDocumentCommand{\inc}{O{F}}{\ensuremath{\mathsf{G_{inc}}(#1)}}
+\NewDocumentCommand{\neigh}{O{v} O{H}}{\ensuremath{N_{#2}(#1)}}
+\NewDocumentCommand{\oneigh}{O{v} O{H}}{\ensuremath{N^*_{#2}(#1)}}
+\NewDocumentCommand{\calH}{}{\ensuremath{\mathcal{H}}}
+\NewDocumentCommand{\calM}{}{\ensuremath{\mathcal{M}}}
+
+\NewDocumentCommand{\mim}{m}{\ensuremath{mim}(#1)}
+
+% Circuits
+
+\NewDocumentCommand{\inputs}{O{v}}{\ensuremath{\mathsf{inputs}}(#1)}
+\NewDocumentCommand{\emptytuple}{}{\ensuremath{\langle \rangle}}
+
+%% Gates
+
+\NewDocumentCommand{\dec}{}{\ensuremath{\mathsf{dec}}}
+
+%% Circuit families
+
+\NewDocumentCommand{\jcircuit}{}{$\{ \bowtie, \ecup \}$-circuit}
+\NewDocumentCommand{\ucircuit}{}{$\{\bowtie, \cup\}$-circuit}
+
+\NewDocumentCommand{\utcircuit}{}{$\{\times, \cup\}$-circuit}
+\NewDocumentCommand{\eutcircuit}{}{$\{\times, \ecup\}$-circuit}
+
+\NewDocumentCommand{\detcircuit}{}{$\{\times,\uplus\}$-circuit}
+
+
+\NewDocumentCommand{\edcircuit}{}{$\{\times, \overline{\dec}\}$-circuit}
+\NewDocumentCommand{\dcircuit}{}{$\{\times,\dec\}$-circuit}
+
+
+\NewDocumentCommand{\ocircuit}{}{ordered $\{\times,\dec\}$-circuit}
+
+\NewDocumentCommand{\rel}{O{C}}{\ensuremath{\mathsf{rel}({#1})}}
+\NewDocumentCommand{\nrel}{O{g} O{d}}{\ensuremath{\mathsf{nrel}({#1,#2})}}
+
+
+%% Note
+%
+%\newcommand{\note}[1]{\color{magenta} Note: #1 \color{black}}
+%
+\NewDocumentCommand{\ine}{O{g}}{\ensuremath{\mathsf{in_E}}(#1)}
+\NewDocumentCommand{\oute}{O{g}}{\ensuremath{\mathsf{out_E}}(#1)}
+\NewDocumentCommand{\ing}{O{g}}{\ensuremath{\mathsf{in}}(#1)}
+\NewDocumentCommand{\outg}{O{g}}{\ensuremath{\mathsf{out}}(#1)}
+\NewDocumentCommand{\edges}{O{C} O{}}{\ensuremath{\mathsf{edges}_{#2}(#1)}}
+\NewDocumentCommand{\gates}{O{C} O{}}{\ensuremath{\mathsf{gates}_{#2}(#1)}}
+\RenewDocumentCommand{\R}{}{\ensuremath{\mathbb{R}}}
+\NewDocumentCommand{\Rp}{}{\ensuremath{\mathbb{R_+}}}
+
+\DeclareMathOperator{\size}{size}
+
+% Databases
+
+\NewDocumentCommand{\db}{}{\ensuremath{\mathbb{D}}}
+\NewDocumentCommand{\Project}{}{\ensuremath{\mathsf{Project}}}
+\NewDocumentCommand{\Employee}{}{\ensuremath{\mathsf{Employee}}}
+\RenewDocumentCommand{\size}{m}{\ensuremath{\|#1\|}}
+\NewDocumentCommand{\dom}{m}{\ensuremath{\mathsf{dom}({#1})}}
+\NewDocumentCommand{\ccq}{O{Q} O{\tau}}{\ensuremath{\mathsf{cc}({#1}, {#2})}}
+\NewDocumentCommand{\pcc}{O{Q} O{i} O{\pi}}{\ensuremath{{#3}\text{-}\mathsf{cc}(#1,#2)}}
+\NewDocumentCommand{\apcc}{O{Q} O{\pi}}{\ensuremath{{#2}\text{-}\mathsf{cc}(#1)}}
+
+\NewDocumentCommand{\dpll}{O{Q} O{\tau} O{\pi}}{\ensuremath{\mathsf{DPLL}({#1}, {#2}, {#3})}}
+\NewDocumentCommand{\rec}{O{Q} O{\pi}}{\ensuremath{\mathbf{R}_{#1,#2}}}
+\NewDocumentCommand{\gatoms}{O{i} O{Q} O{\pi}}{\ensuremath{G_{#2,#3}^{#1}}}
+
+\NewDocumentCommand{\bin}{m O{b}}{\ensuremath{\widetilde{#1}^{#2}}}
+\NewDocumentCommand{\debin}{m O{b}}{\ensuremath{\bar{#1}^{#2}}}
+\NewDocumentCommand{\ans}{O{Q}}{\ensuremath{{{\llbracket #1 \rrbracket}}}}
+\NewDocumentCommand{\sans}{O{Q} O{D}}{\ensuremath{{{\llbracket #1 \rrbracket}_{#2}}}}
+
+
+\NewDocumentCommand{\fN}{O{i} O{H} O{\pi}}{\ensuremath{\mathcal{N}_{#2,#3}(#1)}}
+
+% \NewDocumentCommand{\Ot}{}{\ensuremath{\tilde{O}}}
+% \NewDocumentCommand{\Op}{}{\ensuremath{O_\poly}}
+% \NewDocumentCommand{\Otp}{}{\ensuremath{\Ot_\poly}}
+
+\DeclareMathOperator{\Ot}{\tilde{O}}
+\DeclareMathOperator{\Otp}{\tilde{O}_{\poly}}
+\DeclareMathOperator{\Op}{O_{\poly}}
+
+\NewDocumentCommand{\tup}{O{}}{\ensuremath{\langle #1 \rangle}}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
