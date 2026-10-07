@@ -1,7 +1,8 @@
 __pycache__/
 .DS_Store
 .vscode/
-arXiv-2604.05537v1/# Byte-compiled / optimized / DLL files
+arXiv-2604.05537v1/
+# Byte-compiled / optimized / DLL files
 *.py[codz]
 *$py.class
 
