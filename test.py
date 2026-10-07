@@ -64,6 +64,8 @@ print(len(C))   # 334: the multiples of 3 in [0, 1000)
 
 # %%
 from util import *          # also brings in TDD, group, bottom_up, ... from tdd.py
+
+# %%
 A = TDD([0, 1, 4, 5, 10, 11], 4)
 show_vtree(A)               # build_vtree
 show_group(A, (0, 2))       # group
@@ -75,9 +77,16 @@ show_and(A, TDD([1, 2, 3, 4, 5, 6, 7], 4))   # __and__
 explore()                   # all of the above, with widgets
 # %%
 from stepper import *
+
+# %%
 A = TDD([0, 1, 4, 5, 10, 11], 4)
-play_and(A, TDD([1, 2, 3, 4, 5, 6, 7], 4))   # __and__, one pair combination at a time
+# A = TDD(range(8), 4)
 play_build(A)                                 # the constructor, one group at a time
+
+# %%
+play_and(A, TDD([1, 2, 3, 4, 5, 6, 7], 4))   # __and__, one pair combination at a time
+
+# %%
 play_find(A, 6)                               # _find, one vtree node at a time
 play_count(A)                                 # __len__, one TDD node at a time
 # %%
